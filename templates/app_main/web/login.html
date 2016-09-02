@@ -1,0 +1,54 @@
+
+<form action="" id="form1" method="post" class="pure-form pure-form-aligned">
+    <input type="hidden" id="_xsrf" name="_xsrf" value="#{self.xsrf_token}">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="name">Username</label>
+            <input id="name" name="name" type="text" placeholder="Username">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="pure-controls">
+            <button id="submit" type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>
+
+<p><a href="/register">注册</a></p>
+
+
+<script>
+    $("#form1").submit(function(e){
+        var xsrf = $('#_xsrf').val();
+        var name = $('#name').val();
+        var password = $('#password').val();
+        var btn = $('#submit');
+
+        if(name && password){
+            btn.attr('disabled', true);
+            $.ajax({
+                url: '/login',
+                data: {'act': 'login', 'name': name, 'password': password, '_xsrf': xsrf},
+                success: function(data) {
+                    $('#name').val('');
+                    $('#password').val('');
+                    btn.attr('disabled', false);
+                    if(data.code==200){
+                        window.location.href = data.url;
+                    }else{
+                        $.toast(data.msg);
+                    }
+                },
+                dataType: 'json',
+                type: 'POST'
+            });
+        }else{
+            $.toast("用户名和密码必填");
+        }
+        return false;
+    });
+</script>

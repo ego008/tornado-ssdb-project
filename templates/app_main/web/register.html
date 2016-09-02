@@ -1,0 +1,61 @@
+
+<form action="" id="form1" method="post" class="pure-form pure-form-aligned">
+    <input type="hidden" id="_xsrf" name="_xsrf" value="#{self.xsrf_token}">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="name">Username</label>
+            <input id="name" name="name" type="text" placeholder="Username">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password2">Repeat Password</label>
+            <input id="password2" name="password2" type="password" placeholder="Password">
+        </div>
+
+        <div class="pure-controls">
+            <button id="submit" type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>
+
+<p><a href="/login">登录</a></p>
+
+
+<script>
+    $("#form1").submit(function(e){
+        var xsrf = $('#_xsrf').val();
+        var name = $('#name').val();
+        var password = $('#password').val();
+        var password2 = $('#password2').val();
+        var btn = $('#submit');
+
+        if(name && password && password2){
+            btn.attr('disabled', true);
+            $.ajax({
+                url: '/register',
+                data: {'act': 'register', 'name': name, 'password': password, 'password2': password2, '_xsrf': xsrf},
+                success: function(data) {
+                    $('#name').val('');
+                    $('#password').val('');
+                    $('#password2').val('');
+                    btn.attr('disabled', false);
+                    if(data.code==200){
+                        window.location.href = data.url;
+                    }else{
+                        $.toast(data.msg);
+                    }
+                },
+                dataType: 'json',
+                type: 'POST'
+            });
+        }else{
+            $.toast("用户名和密码必填");
+        }
+        return false;
+    });
+</script>

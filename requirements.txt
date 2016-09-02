@@ -1,0 +1,4 @@
+spp==0.0.7
+Tenjin==1.1.1
+tornado==4.3
+bcrypt

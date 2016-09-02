@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="#{{CONFIG.LANGUAGE}}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>#{title}</title>
+    <link rel="stylesheet" href="/static/css/pure-min.css">
+
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="/static/css/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/static/css/grids-responsive-min.css">
+<!--<![endif]-->
+
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="/static/main/web/css/blog-old-ie.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/static/main/web/css/blog.css">
+<!--<![endif]-->
+    <link rel="stylesheet" href="/static/css/jquery.toast.min.css">
+
+    <script src="/static/js/jquery-2.2.0.js"></script>
+    <script src="/static/js/jquery.toast.min.js"></script>
+
+</head>
+<body>
+
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title"><a href="/">#{{CONFIG.SITE_TITLE}}</a></h1>
+            <h2 class="brand-tagline">#{{CONFIG.SITE_SUB_TITLE}}</h2>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <?py if self.current_user: ?>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/logout">#{self.current_user['name']} 退出</a>
+                    </li>
+                    <?py else: ?>
+                    <li class="nav-item">
+                        <a class="pure-button" href="#{{CONFIG.LOGIN_URL}}">登录</a>
+                    </li>
+                    <?py #endif ?>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+
+            #{_content}
+
+            <div class="footer">
+                <div class="pure-menu pure-menu-horizontal">
+                    <ul>
+                        <li class="pure-menu-item"><a href="http://www.pylist.com/" target="_blank" class="pure-menu-link">论坛</a></li>
+                        <li class="pure-menu-item"><a href="http://github.com/ego008/tornado-ssdb-project/" target="_blank" class="pure-menu-link">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
